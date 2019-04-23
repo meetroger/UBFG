@@ -29,7 +29,8 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->updateButton, SIGNAL(clicked()), thread, SLOT(run()));
     qRegisterMetaType<QImage>("QImage");
     connect(thread, SIGNAL(renderedImage(QImage)), ui->widget, SLOT(updatePixmap(QImage)));
-    ui->encoding->addItem("UNICODE");
+    // ui->encoding->addItem("UNICODE");
+    ui->encoding->addItem("UTF-8");
     QList<QByteArray> avaiableCodecs = QTextCodec::availableCodecs();
     qSort(avaiableCodecs);
     for(int i = 0; i < avaiableCodecs.count(); i++)
@@ -140,6 +141,8 @@ void MainWindow::loadProject()
         project = fi.fileName();
         QSettings settings(file, QSettings::IniFormat, this);
 
+        ui->charsetStart->setValue(settings.value("charsetStart", 32).toInt());
+        ui->charsetEnd->setValue(settings.value("charsetEnd", 126).toInt());
         ui->plainTextEdit->setPlainText(settings.value("charList", " abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.,!?-+\\/():;%&`'*#$=[]@^{}_~\"><").toString());
         ui->trim->setChecked(settings.value("trim", true).toBool());
         ui->borderTop->setValue(settings.value("borderTop", 0).toInt());
@@ -153,7 +156,7 @@ void MainWindow::loadProject()
         ui->distanceField->setChecked(settings.value("distanceField", false).toBool());
         ui->comboHeuristic->setCurrentIndex(settings.value("heuristic", 1).toInt());
         ui->sortOrder->setCurrentIndex(settings.value("sortOrder", 2).toInt());
-        ui->outputFormat->setCurrentIndex(settings.value("outFormat", 0).toInt());
+        ui->outputFormat->setCurrentIndex(settings.value("outFormat", 1).toInt());
         //compatible with old format without UNICODE and with export indexes instead of text
         int encodingInt = settings.value("encoding", 0).toInt();
         QString encodingStr = settings.value("encoding", 0).toString();
@@ -191,6 +194,8 @@ void MainWindow::saveProject()
         project = fi.fileName();
         QSettings settings(file, QSettings::IniFormat, this);
 
+        settings.setValue("charsetStart", ui->charsetStart->value());
+        settings.setValue("charsetEnd", ui->charsetEnd->value());
         settings.setValue("charList", ui->plainTextEdit->toPlainText());
         settings.setValue("trim", ui->trim->isChecked());
         settings.setValue("borderTop", ui->borderTop->value());

@@ -114,6 +114,8 @@ static void dfcalculate(QImage *img, int distanceFieldScale, bool transparent)
 {
     int x, y;
     int w = img->width(), h = img->height();
+
+    (void)distanceFieldScale;
     grid[0].w = grid[1].w = w;
     grid[0].h = grid[1].h = h;
     grid[0].grid = (Point*)malloc(sizeof(Point) * (w + 2) * (h + 2));
@@ -181,7 +183,16 @@ void FontRender::run()
     uint width, height;
     QImage::Format baseTxtrFormat;
     QImage::Format glyphTxtrFormat;
-    QString charList = ui->plainTextEdit->toPlainText();
+
+    int charsetStart = ui->charsetStart->value();
+    int charsetEnd = ui->charsetEnd->value();
+    QString charList;
+    if (charsetStart > 0 && charsetEnd > 0) {
+        for (int i = charsetStart; i < charsetEnd; i++)
+            charList.append(QChar(i));
+    } else
+        charList = ui->plainTextEdit->toPlainText();
+
     packer.sortOrder = ui->sortOrder->currentIndex();
     packer.borderTop = ui->borderTop->value();
     packer.borderLeft = ui->borderLeft->value();
