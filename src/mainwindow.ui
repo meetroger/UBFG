@@ -693,28 +693,12 @@
           </item>
 
           <item>
-           <widget class="QSpinBox" name="charsetStart">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="minimum">
-             <number>0</number>
-            </property>
-            <property name="maximum">
-             <number>4096</number>
-            </property>
-            <property name="singleStep">
-             <number>1</number>
-            </property>
-            <property name="value">
-             <number>32</number>
+           <widget class="QLineEdit" name="charsetStart">
+            <property name="text">
+             <string>32</string>
             </property>
            </widget>
           </item>
-
           <item>
            <widget class="QLabel" name="label_charset_to">
             <property name="sizePolicy">
@@ -728,30 +712,13 @@
             </property>
            </widget>
           </item>
-
           <item>
-           <widget class="QSpinBox" name="charsetEnd">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="minimum">
-             <number>0</number>
-            </property>
-            <property name="maximum">
-             <number>255</number>
-            </property>
-            <property name="singleStep">
-             <number>1</number>
-            </property>
-            <property name="value">
-             <number>126</number>
+           <widget class="QLineEdit" name="charsetEnd">
+            <property name="text">
+             <string>32</string>
             </property>
            </widget>
           </item>
-
          </layout>
         </item>
 
@@ -1170,6 +1137,11 @@
             <property name="currentIndex">
              <number>0</number>
             </property>
+            <item>
+             <property name="text">
+              <string>1 bit (LSB)</string>
+             </property>
+            </item>
             <item>
              <property name="text">
               <string>8 bit</string>

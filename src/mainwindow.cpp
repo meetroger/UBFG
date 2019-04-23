@@ -141,8 +141,8 @@ void MainWindow::loadProject()
         project = fi.fileName();
         QSettings settings(file, QSettings::IniFormat, this);
 
-        ui->charsetStart->setValue(settings.value("charsetStart", 32).toInt());
-        ui->charsetEnd->setValue(settings.value("charsetEnd", 126).toInt());
+        ui->charsetStart->setText(settings.value("charsetStart", 32).toString());
+        ui->charsetEnd->setText(settings.value("charsetEnd", 126).toString());
         ui->plainTextEdit->setPlainText(settings.value("charList", " abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.,!?-+\\/():;%&`'*#$=[]@^{}_~\"><").toString());
         ui->trim->setChecked(settings.value("trim", true).toBool());
         ui->borderTop->setValue(settings.value("borderTop", 0).toInt());
@@ -194,8 +194,8 @@ void MainWindow::saveProject()
         project = fi.fileName();
         QSettings settings(file, QSettings::IniFormat, this);
 
-        settings.setValue("charsetStart", ui->charsetStart->value());
-        settings.setValue("charsetEnd", ui->charsetEnd->value());
+        settings.setValue("charsetStart", ui->charsetStart->text().toInt());
+        settings.setValue("charsetEnd", ui->charsetEnd->text().toInt());
         settings.setValue("charList", ui->plainTextEdit->toPlainText());
         settings.setValue("trim", ui->trim->isChecked());
         settings.setValue("borderTop", ui->borderTop->value());

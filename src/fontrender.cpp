@@ -184,11 +184,11 @@ void FontRender::run()
     QImage::Format baseTxtrFormat;
     QImage::Format glyphTxtrFormat;
 
-    int charsetStart = ui->charsetStart->value();
-    int charsetEnd = ui->charsetEnd->value();
+    int charsetStart = ui->charsetStart->text().toInt();
+    int charsetEnd = ui->charsetEnd->text().toInt();
     QString charList;
     if (charsetStart > 0 && charsetEnd > 0) {
-        for (int i = charsetStart; i < charsetEnd; i++)
+        for (int i = charsetStart; i <= charsetEnd; i++)
             charList.append(QChar(i));
     } else
         charList = ui->plainTextEdit->toPlainText();
@@ -335,7 +335,7 @@ void FontRender::run()
             p.fillRect(0,0,texture.width(),texture.height(), bkgColor);
         for (i = 0; i < glyphLst.size(); ++i)
             if(glyphLst.at(i).merged == false)
-                    p.drawImage(QPoint(glyphLst.at(i).rc.x(), glyphLst.at(i).rc.y()), glyphLst.at(i).img);                   
+                    p.drawImage(QPoint(glyphLst.at(i).rc.x(), glyphLst.at(i).rc.y()), glyphLst.at(i).img);
         p.end();
         // apply distance field calculations if selected
         if(distanceField)
@@ -348,11 +348,15 @@ void FontRender::run()
         if (ui->transparent->isEnabled() && ui->transparent->isChecked())
         {
             if (0 == ui->bitDepth->currentIndex())
+                texture = texture.convertToFormat(QImage::Format_MonoLSB, Qt::ThresholdAlphaDither | Qt::PreferDither);
+            else if (1 == ui->bitDepth->currentIndex())
                 texture = texture.convertToFormat(QImage::Format_Indexed8, Qt::ThresholdAlphaDither | Qt::PreferDither);
         }
         else
         {
-            if (0 == ui->bitDepth->currentIndex()) // 8 bit alpha image
+            if (0 == ui->bitDepth->currentIndex())
+                texture = texture.convertToFormat(QImage::Format_MonoLSB, Qt::ThresholdAlphaDither | Qt::ThresholdDither);
+            else if (1 == ui->bitDepth->currentIndex()) // 8 bit alpha image
                 texture = texture.convertToFormat(QImage::Format_Indexed8, Qt::ThresholdAlphaDither | Qt::ThresholdDither);
             else // 24 bit image
                 texture = texture.convertToFormat(QImage::Format_RGB888, Qt::ThresholdAlphaDither | Qt::PreferDither);
