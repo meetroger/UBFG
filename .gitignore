@@ -7,3 +7,6 @@ UBFG
 Makefile
 moc_*
 ui_*.h
+
+src/.qmake.stash
+src/UBFG.app/
